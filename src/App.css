@@ -56,3 +56,32 @@
   left: 5vw;
   color: white;
 }
+.movies-list{
+display: flex;
+flex-wrap: wrap;
+padding: 1rem;
+justify-content: center;
+align-items: center;
+}
+.movie-card{
+  width: 20vw;
+  margin: 1rem;
+}
+.movie-title{
+position: absolute;
+top: 1rem;
+left: 0.5rem;
+color: white;
+}
+.movie-button{
+  position: absolute;
+  top: 82%;
+}
+.movie-img{
+  height: 40vh;
+  width: 100%;
+}
+.button-wrapper,.trending{
+  display: flex;
+  justify-content: center;
+}
