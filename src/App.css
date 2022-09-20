@@ -81,7 +81,7 @@ color: white;
   height: 40vh;
   width: 100%;
 }
-.button-wrapper,.trending{
+.button-wrapper,.trending,.pagination{
   display: flex;
   justify-content: center;
 }
