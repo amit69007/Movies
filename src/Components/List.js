@@ -12,6 +12,7 @@ export default class List extends Component {
       currPage:1,
       fav:[]
     }
+    this.favouriteMovies=[];
   }
   handleEnter=(id)=>{
 this.setState({
@@ -63,11 +64,27 @@ this.setState({
       currPage:this.state.currPage+1
   },this.getUpdatedMovies)
 }
-handleFavourites=()=>{
-
+handleFavourites=(movieObj)=>{
+if(this.state.fav.includes(movieObj.id)){
+this.favouriteMovies=this.favouriteMovies.filter(movie=>{
+  return(
+    movie.id!=movieObj.id
+  )
+})
+}
+else{
+  this.favouriteMovies.push(movieObj)
+}
+let tempData=this.favouriteMovies.map(movieObj=>{
+  return(movieObj.id)
+})  
+this.setState({
+fav:[...tempData]
+})
 }
   render() {
     console.log("render called");
+    console.log("qwerty",this.favouriteMovies);
     // let allMovies= movies.results; 
     return (  
    <> 
@@ -88,7 +105,7 @@ handleFavourites=()=>{
               <h5 className="card-title movie-title">{movieObj.original_title}</h5>
       <div className='button-wrapper'>
         {this.state.hover==movieObj.id &&
-              <a href="#" className="btn btn-primary movie-button" onClick={this.handleFavourites}>
+              <a href="#" className="btn btn-primary movie-button" onClick={()=>{this.handleFavourites(movieObj)}}>
                 Add to Favourites</a>
               }
             </div>

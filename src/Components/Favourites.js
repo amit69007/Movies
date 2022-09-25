@@ -7,7 +7,7 @@ export default class Favourites extends Component {
         this.state={
             movies:[],
             genre:[],
-            currGenre:"All Genre"
+            currGenre:"All Genre",
         }
     }
     async componentDidMount(){
@@ -79,6 +79,17 @@ this.setState({
         10752:"War",
         37:"Western",
     }
+    let filteredMovies=[]
+    if(this.state.currGenre!="All Genre"){
+      filteredMovies=this.state.movies.filter((movieObj)=>{
+        return(
+        genreId[movieObj.genre_ids[0]]==this.state.currGenre
+        )
+      })
+    }
+    else{
+      filteredMovies=this.state.movies
+    }
     return (
       <div className='row'>
         <div className='col-3 p-5 favourites-list' >
@@ -115,7 +126,7 @@ this.setState({
   <tbody>
     
         {
-this.state.movies.map((movieObj)=>{
+filteredMovies.map((movieObj)=>{
   return(
 <tr>
  <td>
