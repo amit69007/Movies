@@ -14,9 +14,7 @@ export default class Favourites extends Component {
         console.log("CDM called");
         // let res= await fetch("https://api.themoviedb.org/3/movie/popular?api_key=2ba03c19ac9c2cc6ec52c091ccbfb961&language=en-US&page=1")
         // let data= await res.json()
-        let data=await axios.get("https://api.themoviedb.org/3/movie/popular?api_key=2ba03c19ac9c2cc6ec52c091ccbfb961&language=en-US&page=1")
-        console.log(data.data);
-
+        let data=JSON.parse(localStorage.getItem("movies"));
         let genreId={
           28:"Action",
           12:"Adventure",
@@ -39,7 +37,7 @@ export default class Favourites extends Component {
           37:"Western",
       }
 let allGenre=[];
-data.data.results.map((movieObj)=>{
+data.map((movieObj)=>{
 if(!allGenre.includes(genreId[movieObj.genre_ids[0]])){
 allGenre.push(genreId[movieObj.genre_ids[0]])
 }
@@ -47,7 +45,7 @@ allGenre.push(genreId[movieObj.genre_ids[0]])
 allGenre.unshift("All Genre");
 console.log(allGenre);        
 this.setState({
-movies:[...data.data.results],
+movies:[...data],
 genre:[...allGenre]
 })
 }

@@ -1,18 +1,16 @@
-import { Axios } from 'axios';
 import React, { Component } from 'react'
 // import { movies } from './getMovies'
 import axios from 'axios';
 export default class List extends Component {
-  constructor(){
-    console.log("constructor called");
-    super()
-    this.state={
-      hover:"",
-      movies:[],
-      currPage:1,
-      fav:[]
-    }
-    this.favouriteMovies=[];
+  constructor() {
+    console.log("constructor is called");
+    super();
+    this.state = {
+      hover: "",
+      movies: [],
+      currPage: 1,
+      fav: JSON.parse(localStorage.getItem("movies")).map((movieObj) => movieObj.id),
+    };
   }
   handleEnter=(id)=>{
 this.setState({
@@ -65,17 +63,19 @@ this.setState({
   },this.getUpdatedMovies)
 }
 handleFavourites=(movieObj)=>{
+let favouriteMovies=JSON.parse(localStorage.getItem("movies")) || []
 if(this.state.fav.includes(movieObj.id)){
-this.favouriteMovies=this.favouriteMovies.filter(movie=>{
+favouriteMovies=favouriteMovies.filter((movie)=>{
   return(
     movie.id!=movieObj.id
   )
 })
 }
 else{
-  this.favouriteMovies.push(movieObj)
+  favouriteMovies.push(movieObj)
 }
-let tempData=this.favouriteMovies.map(movieObj=>{
+localStorage.setItem("movies",JSON.stringify(favouriteMovies))
+let tempData=favouriteMovies.map(movieObj=>{
   return(movieObj.id)
 })  
 this.setState({
@@ -83,8 +83,8 @@ fav:[...tempData]
 })
 }
   render() {
-    console.log("render called");
-    console.log("qwerty",this.favouriteMovies);
+    // console.log("render called");
+    console.log("qwerty", JSON.parse(localStorage.getItem("movies")));
     // let allMovies= movies.results; 
     return (  
    <> 
@@ -105,8 +105,12 @@ fav:[...tempData]
               <h5 className="card-title movie-title">{movieObj.original_title}</h5>
       <div className='button-wrapper'>
         {this.state.hover==movieObj.id &&
-              <a href="#" className="btn btn-primary movie-button" onClick={()=>{this.handleFavourites(movieObj)}}>
-                Add to Favourites</a>
+              <a href="#" className="btn btn-primary movie-button" onClick={()=>{this.handleFavourites(movieObj)}}
+              >
+                {
+                  this.state.fav.includes(movieObj.id)?"Remove from Favourites":"Add to Favourites"
+                }
+                </a>
               }
             </div>
           </div>
