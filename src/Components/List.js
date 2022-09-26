@@ -4,13 +4,22 @@ import axios from 'axios';
 export default class List extends Component {
   constructor() {
     console.log("constructor is called");
+    let fm;
+    if(JSON.parse(localStorage.getItem("movies"))){
+      fm=JSON.parse(localStorage.getItem("movies")).map((movieObj) => {
+        return movieObj.id})
+      }
+    else{
+      fm=[]
+    }
     super();
     this.state = {
       hover: "",
       movies: [],
       currPage: 1,
-      fav: JSON.parse(localStorage.getItem("movies")).map((movieObj) => movieObj.id),
+      fav:fm
     };
+
   }
   handleEnter=(id)=>{
 this.setState({
@@ -62,30 +71,34 @@ this.setState({
       currPage:this.state.currPage+1
   },this.getUpdatedMovies)
 }
-handleFavourites=(movieObj)=>{
-let favouriteMovies=JSON.parse(localStorage.getItem("movies")) || []
-if(this.state.fav.includes(movieObj.id)){
-favouriteMovies=favouriteMovies.filter((movie)=>{
-  return(
-    movie.id!=movieObj.id
-  )
-})
-}
-else{
-  favouriteMovies.push(movieObj)
-}
-localStorage.setItem("movies",JSON.stringify(favouriteMovies))
-let tempData=favouriteMovies.map(movieObj=>{
-  return(movieObj.id)
-})  
-this.setState({
-fav:[...tempData]
-})
+
+handleFavourites = (movieObj) => {
+  let favouriteMovies=JSON.parse(localStorage.getItem("movies")) || []
+  if (this.state.fav.includes(movieObj.id)) {
+    favouriteMovies=favouriteMovies.filter((movie)=>{
+     return movie.id!=movieObj.id
+    })
+  }
+  else {
+
+    favouriteMovies.push(movieObj);
+  }
+
+  localStorage.setItem("movies", JSON.stringify(favouriteMovies));
+
+  let tempData = favouriteMovies.map((movieObj) => {
+    return movieObj.id
+  });
+  this.setState({
+    fav:[...tempData]
+  })
+
 }
   render() {
-    // console.log("render called");
-    console.log("qwerty", JSON.parse(localStorage.getItem("movies")));
-    // let allMovies= movies.results; 
+    console.log("hello");
+ // console.log("render method called ");
+ console.log("qwerty", JSON.parse(localStorage.getItem("movies")));
+ // let allMovies = movies.results;
     return (  
    <> 
       {
