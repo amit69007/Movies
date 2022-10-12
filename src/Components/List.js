@@ -4,22 +4,14 @@ import axios from 'axios';
 export default class List extends Component {
   constructor() {
     console.log("constructor is called");
-    let fm;
-    if(JSON.parse(localStorage.getItem("movies"))){
-      fm=JSON.parse(localStorage.getItem("movies")).map((movieObj) => {
-        return movieObj.id})
-      }
-    else{
-      fm=[]
-    }
     super();
     this.state = {
       hover: "",
       movies: [],
       currPage: 1,
-      fav:fm
+      fav:localStorage.getItem("movies")?JSON.parse(localStorage.getItem("movies")).map((movieObj) => {
+        return movieObj.id}):[]
     };
-
   }
   handleEnter=(id)=>{
 this.setState({
@@ -134,7 +126,7 @@ handleFavourites = (movieObj) => {
       </div>
       <nav aria-label="Page navigation example" className='pagination'>
       <ul className="pagination">
-        <li className="page-item"  onClick={this.handlePreviousPage}><a className="page-link" href="#">Previous</a></li>
+        <li className="page-item" onClick={this.handlePreviousPage}><a className="page-link" href="#">Previous</a></li>
         <li className="page-item"><a className="page-link" href="#">{this.state.currPage}</a></li>
         <li className="page-item" onClick={this.handleNextPage}><a className="page-link" href="#">Next</a></li>
       </ul>

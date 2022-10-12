@@ -8,13 +8,16 @@ import { BrowserRouter,Routes,Route } from 'react-router-dom';
 function App() {
   return (
 <>
-{/* <Navbar/>
-<Banner/>
-<List/> */}
+{/* <Navbar/> */}
+{/* <Banner/> */}
+{/* <List/> */}
 <BrowserRouter>
 <Navbar/>
 <Routes>
-  <Route path="/" element={<List/>}></Route>
+  <Route path="/" element={<>
+                <Banner/>
+                <List />
+              </>}></Route>
   <Route path="/fav" element={<Favourites/>}></Route>
 </Routes>
 </BrowserRouter>
